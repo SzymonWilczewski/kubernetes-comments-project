@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: mongo-config-map
+
+data:
+  MONGO_INITDB_DATABASE: project

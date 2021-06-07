@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: mongo-deployment
+  labels:
+    app: mongo
+    type: db
+
+spec:
+  template:
+    metadata:
+      name: mongo
+      labels:
+        app: mongo
+        type: db
+
+    spec:
+      containers:
+        - name: mongo
+          image: mongo
+          env:
+            - name: MONGO_INITDB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-config-map
+                  key: MONGO_INITDB_DATABASE
+          volumeMounts:
+            - name: mongo-volume
+              mountPath: /data/db
+      volumes:
+        - name: mongo-volume
+          persistentVolumeClaim:
+            claimName: mongo-pvc
+
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+      type: db

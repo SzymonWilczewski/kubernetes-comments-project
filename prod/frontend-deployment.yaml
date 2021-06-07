@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+spec:
+  selector:
+    matchLabels:
+      type: frontend
+
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: frontend
+        type: frontend
+
+    spec:
+      containers:
+        - name: frontend
+          image: szymonwilczewski/tc-frontend:Dev-1.0
